@@ -10,8 +10,8 @@ public class Spawn : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        dichBegin = Random.Range(3f, 5f);
-        dichDelay = Random.Range(3f, 5f);
+        dichBegin = Random.Range(1f, 3f);
+        dichDelay = Random.Range(2f, 3f);
         InvokeRepeating("SpawnDich", dichBegin, dichDelay);
     }
     // Update is called once per frame

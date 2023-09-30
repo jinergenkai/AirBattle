@@ -31,7 +31,7 @@ public class PlayerAction : MonoBehaviour
 
     void Fire()
 	{
-        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, spawnPoint.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
         //print(spawnPoint.position);
     }
 

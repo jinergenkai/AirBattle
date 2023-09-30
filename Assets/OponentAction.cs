@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -8,10 +9,12 @@ public class OponentAction : MonoBehaviour
 {
 
     private float latestDirectionChangeTime;
-    private readonly float directionChangeTime = 3f;
-    private float characterVelocity = 2f;
+    private readonly float directionChangeTime = 1.5f;
+    private float characterVelocity = 5f;
     private Vector2 movementDirection;
     private Vector2 movementPerSecond;
+
+    private (int, int)[] direct = { (0, 0) ,(0,1), (1,0),(-1, 0), (0, -1)};
 
     //public float moveSpeed = 5.0f;
     //private Transform target; // Đối tượng mục tiêu (ví dụ: người chơi)
@@ -25,8 +28,8 @@ public class OponentAction : MonoBehaviour
 
     void calcuateNewMovementVector()
     {
-        //create a random direction vector with the magnitude of 1, later multiply it with the velocity of the enemy
-        movementDirection = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
+        int index = Random.Range(0, 4);
+        movementDirection = new Vector2(direct[index].Item1, direct[index].Item2).normalized;
         movementPerSecond = movementDirection * characterVelocity;
     }
 

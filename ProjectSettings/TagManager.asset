@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Bullet
   - TriggerZone
+  - Score
+  - Enemy
+  - ScreenZone
   layers:
   - Default
   - TransparentFX

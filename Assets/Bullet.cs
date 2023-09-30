@@ -17,8 +17,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        print("1");
-        if (collision.gameObject.CompareTag("TriggerZone"))
+        if (collision.gameObject.CompareTag("ScreenZone"))
         {
             Destroy(gameObject);
         }

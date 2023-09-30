@@ -21,6 +21,6 @@ public class Spawn : MonoBehaviour
     }
     void SpawnDich()
     {
-        Instantiate(dich, OponentPos.position, OponentPos.rotation);
+        Instantiate(dich, OponentPos.position, Quaternion.Euler(0f, 0f, 180f));
     }
 }

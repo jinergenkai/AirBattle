@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerAction : MonoBehaviour
 {
@@ -9,8 +11,10 @@ public class PlayerAction : MonoBehaviour
     public float bulletSpeed = 10;
     public GameObject bulletPrefab; 
     public Transform spawnPoint;
+    public Text spaceToPlay;
     void Start()
     {
+        Time.timeScale = 0;
     }
 
 
@@ -25,6 +29,8 @@ public class PlayerAction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Time.timeScale = 1;
+            spaceToPlay.gameObject.SetActive(false);
             Fire();
         }
     }
@@ -37,5 +43,16 @@ public class PlayerAction : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            ResetScene();
+        }
+    }
+
+
+    void ResetScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
     }
 }

@@ -133,6 +133,14 @@ public class OponentAction : MonoBehaviour
             score = FindAnyObjectByType<Text>();
             score.text = "" + (int.Parse(score.text) + 1);
         }
+        print("haha");
+        if (other.CompareTag("Player"))
+        {
+            print("thua cuoc");
+            Destroy(gameObject);
+            ResetScene();
+        }
+
         //if (other.CompareTag("ScreenZone"))
         //{
         //    movementDirection = -movementDirection;
@@ -141,6 +149,11 @@ public class OponentAction : MonoBehaviour
         //{
         //    movementDirection = -movementDirection;
         //}
+    }
+    void ResetScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
     }
 
 }

@@ -45,14 +45,10 @@ public class PlayerAction : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            ResetScene();
+            //ResetScene();
         }
     }
 
 
-    void ResetScene()
-    {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
-    }
+
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 
@@ -19,6 +21,8 @@ public class OponentAction : MonoBehaviour
     private Vector2 movementPerSecond;
 
     public Text score;
+    public Text gameover;
+    public bool flagover = false;
 
     private (int, int)[] direct = { (0, 0) ,(0,1), (1,0),(-1, 0), (0, -1)};
     private int exceptX = 0, exceptY = 0;
@@ -55,16 +59,28 @@ public class OponentAction : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (flagover == true)
+            {
+                flagover = false;
+                gameover.text = "0";
+                ResetScene();
+            }
+            //Time.timeScale = 1;
+            //gameover.gameObject.SetActive(false);
+        }
+
         Vector2 current = gameObject.transform.position;
 
         Boolean newDirect = false;
-        if (current.y <= -11.37f)
+        if (current.y <= -13.37f)
         {
             exceptY = 4;
             nextDirect = 1;
             newDirect = true;
         }
-        else if (current.y >= 3.5f)
+        else if (current.y >= -2.5f)
         {
             exceptY = 1;
             nextDirect = 4;
@@ -137,8 +153,14 @@ public class OponentAction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             print("thua cuoc");
-            Destroy(gameObject);
-            ResetScene();
+            //Destroy(gameObject);
+            Time.timeScale = 0;
+            gameover = FindAnyObjectByType<Text>();
+            gameover.gameObject.SetActive(true);
+            gameover.text = "GameOver, Score: " + gameover.text;
+            flagover = true;
+            //Thread.Sleep(3000);
+            //ResetScene();
         }
 
         //if (other.CompareTag("ScreenZone"))

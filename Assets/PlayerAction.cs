@@ -12,6 +12,7 @@ public class PlayerAction : MonoBehaviour
     public GameObject bulletPrefab; 
     public Transform spawnPoint;
     public Text spaceToPlay;
+    //public OponentAction enemy;
     void Start()
     {
         Time.timeScale = 0;
@@ -29,6 +30,11 @@ public class PlayerAction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            //if (enemy.flagover == true)
+            //{
+            //    enemy.flagover = false;
+            //    ResetScene();
+            //}
             Time.timeScale = 1;
             spaceToPlay.gameObject.SetActive(false);
             Fire();
@@ -37,7 +43,11 @@ public class PlayerAction : MonoBehaviour
 
     void Fire()
 	{
-        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
+        Quaternion bulletRotation = Quaternion.Euler(0, 45, 0);
+
+        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.5f, 0, 0), Quaternion.identity);
+
+        GameObject bullet1 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(-0.5f, 0, 0), Quaternion.identity);
         //print(spawnPoint.position);
     }
 
@@ -49,6 +59,11 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    void ResetScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+    }
 
 
 }

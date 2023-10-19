@@ -11,7 +11,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 
-public class OponentAction : MonoBehaviour
+public class OpponentScript : MonoBehaviour
 {
 
     private float latestDirectionChangeTime;
@@ -28,8 +28,7 @@ public class OponentAction : MonoBehaviour
     private int exceptX = 0, exceptY = 0;
     private int nextDirect = 0;
 
-    //public float moveSpeed = 5.0f;
-    //private Transform target; // Đối tượng mục tiêu (ví dụ: người chơi)
+    private int hp = 3;
 
     void Start()
     {
@@ -144,12 +143,22 @@ public class OponentAction : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            Destroy(gameObject);
+            //delete bullet
             Destroy(other.gameObject);
+
+            if (hp > 1)
+            {
+                hp--;
+                return;
+            }
+
+            //delete enemy
+            Destroy(gameObject);
+
+            //update score
             score = FindAnyObjectByType<Text>();
             score.text = "" + (int.Parse(score.text) + 1);
         }
-        print("haha");
         if (other.CompareTag("Player"))
         {
             print("thua cuoc");

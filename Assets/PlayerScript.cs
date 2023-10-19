@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Assets.Util;
 using static BulletScript;
 
 public class PlayerScript : MonoBehaviour
@@ -16,11 +17,21 @@ public class PlayerScript : MonoBehaviour
     public Text spaceToPlay;
     public e_bulletType bulletType = e_bulletType.doubleBullet;
 
+    public int hp = 3;
+    public int bulletLeft = 20;
+
+    private float lastFireTime = 0;
     private float bulletSpeed = 20;
+
+    private readonly float TIME_BETWEEN_EACH_FIRE = 0.05f;
+    private readonly float TIME_REGAIN_ONE_BULLET = 0.4f;
 
     void Start()
     {
         Time.timeScale = 0;
+
+        //regain bullet each time
+        InvokeRepeating("RegainBullet", 0, TIME_REGAIN_ONE_BULLET);
     }
 
 
@@ -39,7 +50,7 @@ public class PlayerScript : MonoBehaviour
         Vector3 movement = new Vector3(horizontalInput, verticalInput, 0.0f) * moveSpeed * Time.deltaTime;
         transform.position += movement;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
             //if (enemy.flagover == true)
             //{
@@ -48,12 +59,24 @@ public class PlayerScript : MonoBehaviour
             //}
             Time.timeScale = 1;
             spaceToPlay.gameObject.SetActive(false);
-            Fire();
+            if (Time.time - lastFireTime > TIME_BETWEEN_EACH_FIRE)
+            {
+                Fire();
+                lastFireTime = Time.time;
+            }
         }
+
+
+
     }
 
     void Fire()
 	{
+        if (bulletLeft <= 0)
+        {
+            return;
+        }
+        bulletLeft--;
         //controller
         switch(bulletType)
         {
@@ -118,12 +141,19 @@ public class PlayerScript : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.6f, 0, 0), Quaternion.identity);
         GameObject bullet1 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(-0.6f, 0, 0), Quaternion.identity);
         bullet.GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
+        bullet1.GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
     }
 
     private void NormalBullet()
     {
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
         bullet.GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
+    }
+
+    private void RegainBullet()
+    {
+        if (bulletLeft < 30)
+            bulletLeft++;
     }
 
 

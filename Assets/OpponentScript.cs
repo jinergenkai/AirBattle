@@ -28,7 +28,7 @@ public class OpponentScript : MonoBehaviour
     private int exceptX = 0, exceptY = 0;
     private int nextDirect = 0;
 
-    private int hp = 3;
+    private int hp = 6;
 
     void Start()
     {
@@ -161,8 +161,16 @@ public class OpponentScript : MonoBehaviour
         }
         if (other.CompareTag("Player"))
         {
+            Destroy(gameObject);
+            if (other.GetComponent<PlayerScript>().hp > 1)
+            {
+                other.GetComponent<PlayerScript>().hp--;
+                return;
+            }
+
             print("thua cuoc");
             //Destroy(gameObject);
+            other.GetComponent<PlayerScript>().hp = 3;
             Time.timeScale = 0;
             gameover = FindAnyObjectByType<Text>();
             gameover.gameObject.SetActive(true);
@@ -171,15 +179,6 @@ public class OpponentScript : MonoBehaviour
             //Thread.Sleep(3000);
             //ResetScene();
         }
-
-        //if (other.CompareTag("ScreenZone"))
-        //{
-        //    movementDirection = -movementDirection;
-        //}
-        //if (other.CompareTag("Enemy"))
-        //{
-        //    movementDirection = -movementDirection;
-        //}
     }
     void ResetScene()
     {

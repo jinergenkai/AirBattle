@@ -6,15 +6,6 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    public enum e_bulletType
-    {
-        normalBullet,
-        doubleBullet,
-        tripleBullet,
-        crossBullet,
-        slowBullet,
-        maxBulletType
-    }
     private float speed = 5f;
     private float angle = 0f;
     //private e_bulletType bulletType;

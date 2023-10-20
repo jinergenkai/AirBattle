@@ -10,10 +10,8 @@ using static BulletScript;
 
 public class PlayerScript : MonoBehaviour
 {
-    public float moveSpeed = 5.0f; 
 
     public GameObject bulletPrefab; 
-    public GameObject excaliburPrefab;
     public Transform spawnPoint;
     public Text spaceToPlay;
     public e_bulletType bulletType = e_bulletType.doubleBullet;
@@ -24,14 +22,13 @@ public class PlayerScript : MonoBehaviour
     private float lastFireTime = 0;
     private float bulletSpeed = 20;
 
-    private float TIME_BETWEEN_EACH_FIRE = 0.05f;
+    public float fireRate = 0.05f;
     private float TIME_REGAIN_ONE_BULLET = 0.2f;
 
     void Start()
     {
         Time.timeScale = 0;
-
-        //regain bullet each time
+        bulletPrefab = Resources.Load<GameObject>("Prefab/Bullet");
         InvokeRepeating("RegainBullet", 0, TIME_REGAIN_ONE_BULLET);
     }
 
@@ -50,7 +47,7 @@ public class PlayerScript : MonoBehaviour
             //}
             Time.timeScale = 1;
             spaceToPlay.gameObject.SetActive(false);
-            if (Time.time - lastFireTime > TIME_BETWEEN_EACH_FIRE)
+            if (Time.time - lastFireTime > fireRate)
             {
                 Fire();
                 lastFireTime = Time.time;
@@ -67,7 +64,14 @@ public class PlayerScript : MonoBehaviour
         {
             return;
         }
-        bulletLeft--;
+        if (bulletType == e_bulletType.excaliburBullet)
+        {
+            bulletLeft -= 10;
+        }
+        else
+        {
+            bulletLeft--;
+        }
         //controller
         switch(bulletType)
         {
@@ -102,12 +106,14 @@ public class PlayerScript : MonoBehaviour
     //               ┛┛   
     private void SlowBullet()
     {
+        bulletPrefab = Resources.Load<GameObject>("Prefab/Bullet");
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
         bullet.GetComponent<BulletScript>().Initialize(5, 0);
     }
 
     private void CrossBullet()
     {
+        bulletPrefab = Resources.Load<GameObject>("Prefab/Bullet");
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.6f, 0, 0), Quaternion.identity);
         GameObject bullet1 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.6f, 0, 0), Quaternion.identity);
         GameObject bullet2 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(-0.6f, 0, 0), Quaternion.identity);
@@ -120,6 +126,7 @@ public class PlayerScript : MonoBehaviour
 
     private void TripleBullet()
     {
+        bulletPrefab = Resources.Load<GameObject>("Prefab/Bullet");
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.6f, 0, 0), Quaternion.identity);
         GameObject bullet1 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0, 0, 0), Quaternion.identity);
         GameObject bullet2 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(-0.6f, 0, 0), Quaternion.identity);
@@ -130,6 +137,7 @@ public class PlayerScript : MonoBehaviour
 
     private void DoubleBullet()
     {
+        bulletPrefab = Resources.Load<GameObject>("Prefab/Bullet");
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.6f, 0, 0), Quaternion.identity);
         GameObject bullet1 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(-0.6f, 0, 0), Quaternion.identity);
         bullet.GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
@@ -138,13 +146,15 @@ public class PlayerScript : MonoBehaviour
 
     private void NormalBullet()
     {
+        bulletPrefab = Resources.Load<GameObject>("Prefab/Bullet");
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
         bullet.GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
     }
     private void ExcaliburBullet()
     {
-        GameObject excalibur1 = Instantiate(excaliburPrefab, spawnPoint.position + new Vector3(2f, 0, 0), Quaternion.identity);
-        GameObject excalibur2 = Instantiate(excaliburPrefab, spawnPoint.position + new Vector3(-2f, 0, 0), Quaternion.identity);
+        bulletPrefab = Resources.Load<GameObject>("Prefab/excaliburBullet");
+        GameObject excalibur1 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(2f, 0, 0), Quaternion.identity);
+        GameObject excalibur2 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(-2f, 0, 0), Quaternion.identity);
         //excalibur1.GetComponent<ExcaliburBulletScript>().Initialize(bulletSpeed, 0);
         //excalibur2.GetComponent<ExcaliburBulletScript>().Initialize(bulletSpeed, 0);
     }

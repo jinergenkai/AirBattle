@@ -144,16 +144,20 @@ public class OpponentScript : MonoBehaviour
         if (other.CompareTag("Bullet"))
         {
             //delete bullet
-            Destroy(other.gameObject);
-
-            if (hp > 1)
+            if (other.name == "ExcaliburBullet(Clone)")
             {
-                hp--;
-                return;
+                Destroy(gameObject);
             }
-
-            //delete enemy
-            Destroy(gameObject);
+            else
+            {
+                Destroy(other.gameObject);
+                if (hp > 1)
+                {
+                    hp--;
+                    return;
+                }
+                Destroy(gameObject);
+            }
 
             //update score
             score = FindAnyObjectByType<Text>();

@@ -60,24 +60,28 @@ public class GiftScript : MonoBehaviour
     {
         playerScript.bulletType = e_bulletType.excaliburBullet;
         playerScript.bulletLeft = 30;
+        playerScript.fireRate = 1;
     }
 
     private void SlowBulletEffect()
     {
         playerScript.bulletType = e_bulletType.slowBullet;
         playerScript.bulletLeft = 30;
+        playerScript.fireRate = 0.07f;
     }
 
     private void CrossBulletEffect()
     {
         playerScript.bulletType = e_bulletType.crossBullet;
         playerScript.bulletLeft = 30;
+        playerScript.fireRate = 0.07f;
     }
 
     private void TripleBulletEffect()
     {
         playerScript.bulletType = e_bulletType.tripleBullet;
         playerScript.bulletLeft = 30;
+        playerScript.fireRate = 0.07f;
 
     }
 
@@ -85,12 +89,14 @@ public class GiftScript : MonoBehaviour
     {
         playerScript.bulletType = e_bulletType.doubleBullet;
         playerScript.bulletLeft = 30;
+        playerScript.fireRate = 0.07f;
     }
 
     private void NormalBulletEffect()
     {
         playerScript.bulletType = e_bulletType.normalBullet;
         playerScript.bulletLeft = 30;
+        playerScript.fireRate = 0.07f;
     }
 
     private void HeartPlusEffect()

@@ -8,12 +8,23 @@ public class BulletScript : MonoBehaviour
 {
     private float speed = 5f;
     private float angle = 0f;
+    private float damage = 1f;
+    private float cost = 1;
+    private float fireRate = 0.05f;
     //private e_bulletType bulletType;
 
     public void Initialize(float speed, float angle)
     {
         this.angle = angle;
         this.speed = speed;
+    }
+    public void Initialize(float speed, float angle, float damage = 1, float cost = 1, float fireRate = 0.05f)
+    {
+        this.angle = angle;
+        this.speed = speed;
+        this.damage = damage;
+        this.cost = cost;
+        this.fireRate = fireRate;
     }
 
     void Update()

@@ -29,21 +29,13 @@ public class GiftScript : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.down * moveSpeed * Time.deltaTime);
-        //destroy when out of screen
-        if (Util.isOutOfScreen(Util.getCornersPlus(Camera.main), transform.position))
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerScript playerScript = other.gameObject.GetComponent<PlayerScript>();
             GiftController();
-
-            //destroy gift
             Destroy(gameObject);
         }
     }
@@ -59,26 +51,31 @@ public class GiftScript : MonoBehaviour
             case e_giftType.tripleBullet: TripleBulletEffect(); break;
             case e_giftType.crossBullet: CrossBulletEffect(); break;
             case e_giftType.slowBullet: SlowBulletEffect(); break;
+            case e_giftType.excalibur: ExcaliburEffect(); break;
+                
         }
+    }
+
+    private void ExcaliburEffect()
+    {
+        playerScript.bulletType = e_bulletType.excaliburBullet;
+        playerScript.bulletLeft = 30;
     }
 
     private void SlowBulletEffect()
     {
-        print("slow");
         playerScript.bulletType = e_bulletType.slowBullet;
         playerScript.bulletLeft = 30;
     }
 
     private void CrossBulletEffect()
     {
-        print("slow");
         playerScript.bulletType = e_bulletType.crossBullet;
         playerScript.bulletLeft = 30;
     }
 
     private void TripleBulletEffect()
     {
-        print("slow");
         playerScript.bulletType = e_bulletType.tripleBullet;
         playerScript.bulletLeft = 30;
 
@@ -98,9 +95,6 @@ public class GiftScript : MonoBehaviour
 
     private void HeartPlusEffect()
     {
-        //inscrease hp for player
-        //GameObject player = GameObject.Find("Player");
-        //PlayerScript playerScript = player.GetComponent<PlayerScript>();
         playerScript.hp = Math.Min(playerScript.hp + 1, 3);
     }
 }

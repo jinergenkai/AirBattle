@@ -28,7 +28,7 @@ public class OpponentScript : MonoBehaviour
     private int exceptX = 0, exceptY = 0;
     private int nextDirect = 0;
 
-    private int hp = 6;
+    private int hp = 2;
 
     void Start()
     {

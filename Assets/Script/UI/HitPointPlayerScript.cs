@@ -8,8 +8,8 @@ public class HitPointPlayerScript : MonoBehaviour
     private Sprite noHeartSprite;
     void Start()
     {
-        heartSprite = Resources.Load<Sprite>("heart");
-        noHeartSprite = Resources.Load<Sprite>("noheart");
+        heartSprite = Resources.Load<Sprite>("UI/heart");
+        noHeartSprite = Resources.Load<Sprite>("UI/noheart");
 
 
     }

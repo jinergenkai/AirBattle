@@ -18,6 +18,7 @@ namespace Assets
             tripleBullet,
             crossBullet,
             slowBullet,
+            excaliburBullet,
             maxBulletType
         };
 
@@ -29,6 +30,7 @@ namespace Assets
             tripleBullet,
             crossBullet,
             slowBullet,
+            excalibur,
             //laserBullet,
             maxGiftType
         }
@@ -49,7 +51,7 @@ namespace Assets
 
 
 
-        static public string[] nameGiftAssets = { "heartPlus", "normalBullet", "doubleBullet", "tripleBullet", "crossBullet", "slowBullet" };
+        static public string[] nameGiftAssets = { "heartPlus", "normalBullet", "doubleBullet", "tripleBullet", "crossBullet", "slowBullet", "excalibur"};
 
 
         static public Vector2 Rotate(Vector2 v2, double angleInDegrees)
@@ -84,7 +86,7 @@ namespace Assets
             Vector3[] corners = new Vector3[4];
             float depth = 10f;
 
-            int tolerance = 3;
+            int tolerance = 20;
 
             corners[0] = mainCamera.ScreenToWorldPoint(new Vector3(0 - tolerance, 0 - tolerance, depth));
             corners[1] = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width + tolerance, 0 - tolerance, depth));

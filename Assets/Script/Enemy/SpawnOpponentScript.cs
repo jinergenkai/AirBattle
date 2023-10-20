@@ -15,7 +15,7 @@ public class SpawnOpponentScript : MonoBehaviour
     {
         //dichBegin = Random.Range(1f, 3f);
         OpponentBegin = 0;
-        OpponentDelay = Random.Range(0.2f, 0.5f);
+        OpponentDelay = Random.Range(0.5f, 0.5f);
         InvokeRepeating("SpawnDich", OpponentBegin, OpponentDelay);
     }
     // Update is called once per frame

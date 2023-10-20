@@ -22,15 +22,4 @@ public class BulletScript : MonoBehaviour
         gameObject.transform.rotation = Quaternion.Euler(0, 0, angle);
         gameObject.transform.Translate(Vector2.up * speed * Time.deltaTime); 
     }
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("ScreenZone"))
-        {
-            Destroy(gameObject);
-        }
-    }
-
-
 }

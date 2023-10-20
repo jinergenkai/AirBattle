@@ -15,7 +15,7 @@ public class SpawnGiftScript : MonoBehaviour
     {
         for (int i = 0; i < (int) e_giftType.maxGiftType; i++)
         {
-            spriteGifts[i] = Resources.Load<Sprite>(nameGiftAssets[i]);
+            spriteGifts[i] = Resources.Load<Sprite>("gift/" + nameGiftAssets[i]);
         }
     }
 

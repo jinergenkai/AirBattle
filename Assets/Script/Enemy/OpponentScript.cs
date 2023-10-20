@@ -13,6 +13,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class OpponentScript : MonoBehaviour
 {
+    public Animator animator;
 
     private float latestDirectionChangeTime;
     private readonly float directionChangeTime = 1.5f;
@@ -143,22 +144,23 @@ public class OpponentScript : MonoBehaviour
     {
         if (other.CompareTag("Bullet"))
         {
-            //delete bullet
-            if (other.name == "ExcaliburBullet(Clone)")
+            switch (other.name)
             {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Destroy(other.gameObject);
-                if (hp > 1)
-                {
+                case "ExcaliburBullet(Clone)":
+                    hp -= 2;
+                    break;
+                case "Dragon(Clone)":
+                    hp -= 10;
+                    break;
+                case "Bullet(Clone)":
+                    Destroy(other.gameObject);
                     hp--;
-                    return;
-                }
-                Destroy(gameObject);
+                    break;
             }
+            if (hp > 1) return;
 
+            animator.SetBool("IsDead", true);
+            Destroy(gameObject, 0.4f);
             //update score
             score = FindAnyObjectByType<Text>();
             score.text = "" + (int.Parse(score.text) + 1);

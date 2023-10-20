@@ -42,7 +42,6 @@ public class GiftScript : MonoBehaviour
 
     private void GiftController()
     {
-        print(giftType);
         switch(giftType)
         {
             case e_giftType.heartPlus: HeartPlusEffect(); break;
@@ -51,16 +50,8 @@ public class GiftScript : MonoBehaviour
             case e_giftType.tripleBullet: TripleBulletEffect(); break;
             case e_giftType.crossBullet: CrossBulletEffect(); break;
             case e_giftType.slowBullet: SlowBulletEffect(); break;
-            case e_giftType.excalibur: ExcaliburEffect(); break;
                 
         }
-    }
-
-    private void ExcaliburEffect()
-    {
-        playerScript.bulletType = e_bulletType.excaliburBullet;
-        playerScript.bulletLeft = 30;
-        playerScript.fireRate = 1;
     }
 
     private void SlowBulletEffect()

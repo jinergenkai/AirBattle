@@ -64,14 +64,7 @@ public class PlayerScript : MonoBehaviour
         {
             return;
         }
-        if (bulletType == e_bulletType.excaliburBullet)
-        {
-            bulletLeft -= 10;
-        }
-        else
-        {
-            bulletLeft--;
-        }
+        bulletLeft--;
         //controller
         switch(bulletType)
         {
@@ -80,7 +73,7 @@ public class PlayerScript : MonoBehaviour
             case e_bulletType.tripleBullet: TripleBullet(); break;
             case e_bulletType.crossBullet: CrossBullet(); break;
             case e_bulletType.slowBullet: SlowBullet(); break;
-            case e_bulletType.excaliburBullet: ExcaliburBullet(); break;
+            //case e_bulletType.excaliburBullet: ExcaliburBullet(); break;
             default: break;
         }
     }
@@ -150,15 +143,6 @@ public class PlayerScript : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
         bullet.GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
     }
-    private void ExcaliburBullet()
-    {
-        bulletPrefab = Resources.Load<GameObject>("Prefab/excaliburBullet");
-        GameObject excalibur1 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(2f, 0, 0), Quaternion.identity);
-        GameObject excalibur2 = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(-2f, 0, 0), Quaternion.identity);
-        //excalibur1.GetComponent<ExcaliburBulletScript>().Initialize(bulletSpeed, 0);
-        //excalibur2.GetComponent<ExcaliburBulletScript>().Initialize(bulletSpeed, 0);
-    }
-
     private void RegainBullet()
     {
         if (bulletLeft < 30)

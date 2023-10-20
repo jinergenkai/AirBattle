@@ -18,7 +18,6 @@ namespace Assets
             tripleBullet,
             crossBullet,
             slowBullet,
-            excaliburBullet,
             maxBulletType
         };
 
@@ -30,7 +29,6 @@ namespace Assets
             tripleBullet,
             crossBullet,
             slowBullet,
-            excalibur,
             //laserBullet,
             maxGiftType
         }
@@ -51,7 +49,7 @@ namespace Assets
 
 
 
-        static public string[] nameGiftAssets = { "heartPlus", "normalBullet", "doubleBullet", "tripleBullet", "crossBullet", "slowBullet", "excalibur"};
+        static public string[] nameGiftAssets = { "heartPlus", "normalBullet", "doubleBullet", "tripleBullet", "crossBullet", "slowBullet"};
 
 
         static public Vector2 Rotate(Vector2 v2, double angleInDegrees)

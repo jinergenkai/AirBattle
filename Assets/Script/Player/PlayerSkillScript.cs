@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,22 @@ public class PlayerSkillScript : MonoBehaviour
                 CallDragon();
             }
         }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (player.bulletLeft > 20)
+            {
+                player.bulletLeft -= 20;
+                ShieldExploision();
+            }
+        }
     }
+
+    private void ShieldExploision()
+    {
+        GameObject bulletPrefab = Resources.Load<GameObject>("Prefab/Shield");
+        GameObject excalibur1 = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+    }
+
     private void ExcaliburBullet()
     {
         GameObject bulletPrefab = Resources.Load<GameObject>("Prefab/excaliburBullet");

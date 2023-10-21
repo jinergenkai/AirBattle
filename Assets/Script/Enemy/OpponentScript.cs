@@ -121,8 +121,8 @@ public class OpponentScript : MonoBehaviour
         }
 
         //move enemy: 
-        transform.position = new Vector2(transform.position.x + (movementPerSecond.x * Time.deltaTime),
-        transform.position.y + (movementPerSecond.y * Time.deltaTime));
+        //transform.position = new Vector2(transform.position.x + (movementPerSecond.x * Time.deltaTime),
+        //transform.position.y + (movementPerSecond.y * Time.deltaTime));
 
         //if (target != null)
         //{

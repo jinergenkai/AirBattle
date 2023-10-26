@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour
     public GameObject bulletPrefab; 
     public Transform spawnPoint;
     public Text spaceToPlay;
+    public Text gameover;
     public e_bulletType bulletType = e_bulletType.doubleBullet;
 
     public int hp = 3;
@@ -27,7 +28,6 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 0;
         bulletPrefab = Resources.Load<GameObject>("Prefab/Bullet");
         InvokeRepeating("RegainBullet", 0, TIME_REGAIN_ONE_BULLET);
     }
@@ -40,13 +40,6 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            //if (enemy.flagover == true)
-            //{
-            //    enemy.flagover = false;
-            //    ResetScene();
-            //}
-            Time.timeScale = 1;
-            spaceToPlay.gameObject.SetActive(false);
             if (Time.time - lastFireTime > fireRate)
             {
                 Fire();

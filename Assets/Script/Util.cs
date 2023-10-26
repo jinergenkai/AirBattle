@@ -5,6 +5,7 @@ using UnityEngine;
 
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace Assets
 {
@@ -92,6 +93,20 @@ namespace Assets
             corners[3] = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width + tolerance, Screen.height + tolerance, depth));
 
             return corners;
+        }
+
+        static public int RandomByPortionArray(int[] portion)
+        {
+            int sum = portion.Sum();
+            var ranValue = UnityEngine.Random.Range(0, sum);
+            
+            for (int i = 0; i < portion.Length; i++)
+            {
+                if (ranValue < portion[i])
+                    return i;
+                ranValue -= portion[i];
+            }
+            return 0;
         }
 
         static public bool isOutOfScreen(Vector3[] corners, Vector3 position)

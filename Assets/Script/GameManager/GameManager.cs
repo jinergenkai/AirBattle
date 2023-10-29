@@ -1,5 +1,7 @@
 using Assets;
 using System;
+using System.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,18 +12,25 @@ public class GameManager : MonoBehaviour
 {
     public Text gameover;
     public Text spaceToPlay;
+    public Text StageText;
     public GameObject player;
 
+    private float stageDurationTime = 2.0f;
 
+    public GameObject score;
+    private int currentGameLevel = 0;
+
+    public int playerLevel = 1;
 
 
     public float OpponentBegin = 0;
     public float OpponentDelay = 1f;
     public GameObject Opponent;
+    float CurrentEnemyObject = 0, MaxEnemyInStage = 0, EnemyGenerateCount = 0;
 
 
     public float BeginTimeGift = 0;
-    public float DelayTimeGift = 3;
+    public float DelayTimeGift = 0.5f;
     public GameObject Gift;
     private Sprite[] spriteGifts = new Sprite[(int)e_giftType.maxGiftType];
 
@@ -42,19 +51,45 @@ public class GameManager : MonoBehaviour
         gameover.enabled = false;
         spaceToPlay.enabled = true;
 
-        //Oponent
-        InvokeRepeating("SpawnEnemyEvent", OpponentBegin, OpponentDelay);
-
-        //Gift
-        InvokeRepeating("SpawnGiftEvent", BeginTimeGift, DelayTimeGift);
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        CurrentEnemyObject = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        if (CurrentEnemyObject == 0 && EnemyGenerateCount == MaxEnemyInStage)
+        {
+            currentGameLevel++;
+            StartNewStage();
+        }
         StartOverGameEvent();
+    }
+
+    private void StartNewStage()
+    {
+        InitStage();
+        StartCoroutine(ShowAndHideText("Stage " + currentGameLevel));
+        CancelInvoke("SpawnEnemyEvent");
+        CancelInvoke("SpawnGiftEvent");
+    }
+
+    private void InitStage()
+    {
+        EnemyGenerateCount = 0;
+        MaxEnemyInStage += 10;
+    }
+
+    private IEnumerator ShowAndHideText(string textToDisplay)
+    {
+        StageText.text = textToDisplay;
+        StageText.enabled = true;
+
+        yield return new WaitForSeconds(stageDurationTime);
+
+        StageText.enabled = false;
+        InvokeRepeating("SpawnGiftEvent", BeginTimeGift, DelayTimeGift);
+        InvokeRepeating("SpawnEnemyEvent", OpponentBegin, OpponentDelay);
+
     }
 
     private void SpawnGiftEvent()
@@ -75,6 +110,13 @@ public class GameManager : MonoBehaviour
 
     private void SpawnEnemyEvent()
     {
+        if (EnemyGenerateCount >= MaxEnemyInStage)
+        {
+            CancelInvoke("SpawnEnemyEvent");
+            return;
+        }
+        EnemyGenerateCount++;
+
         var cameraPosition = Util.getCorners(Camera.main);
 
         var rangeLeft = cameraPosition[2].x;

@@ -18,7 +18,7 @@ namespace Assets
             doubleBullet,
             tripleBullet,
             crossBullet,
-            slowBullet,
+            infiniteBullet,
             maxBulletType
         };
 
@@ -26,10 +26,6 @@ namespace Assets
         {
             heartPlus,
             normalBullet,
-            doubleBullet,
-            tripleBullet,
-            crossBullet,
-            slowBullet,
             //laserBullet,
             maxGiftType
         }
@@ -93,6 +89,15 @@ namespace Assets
             corners[3] = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width + tolerance, Screen.height + tolerance, depth));
 
             return corners;
+        }
+
+        static public bool isOutDurationTime(float lastTime,float durationTime)
+        {
+            if (Time.time - lastTime > durationTime)
+            {
+                return true;
+            }
+            return false;
         }
 
         static public int RandomByPortionArray(int[] portion)

@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class EnemyMoveScript : MonoBehaviour
 {
-    public float EnemySpeed = 10;
+    public float EnemySpeed = 7;
 
     private Transform target;
 
     //private Vector3[] Directs = { new Vector3(0, 0) ,new Vector3(0,1), new Vector3(1,0),new Vector3(-1, 0), new Vector3(0, -1)};
     private Vector3[] Directs = {new Vector3(0, 0), new Vector3(0, 0), new Vector3(1,0),new Vector3(-1, 0), new Vector3(0, -1), new Vector3(0, 1)};
-    private int[] portion = {20, 3, 6, 6, 4, 7};
+    private int[] portion = {12, 3, 6, 6, 4, 7};
     private Vector3 CurrentDirect = new Vector3(0, 0);
 
     private Vector3[] corners;
@@ -41,7 +41,6 @@ public class EnemyMoveScript : MonoBehaviour
             Vector3 direction = (target.position - transform.position);
             direction.Normalize();
             Directs[0] = (direction);
-            Directs[1] = (direction);
         }    
 
         CurrentDirect = Directs[Util.RandomByPortionArray(portion)];

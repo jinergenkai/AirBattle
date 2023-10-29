@@ -8,7 +8,7 @@ using static Assets.Util;
 
 public class GiftScript : MonoBehaviour
 {
-    private float moveSpeed = 5f;
+    private float moveSpeed = 3f;
     private e_giftType giftType;
     GameObject player;
     PlayerScript playerScript;
@@ -46,48 +46,18 @@ public class GiftScript : MonoBehaviour
         {
             case e_giftType.heartPlus: HeartPlusEffect(); break;
             case e_giftType.normalBullet: NormalBulletEffect(); break;
-            case e_giftType.doubleBullet: DoubleBulletEffect(); break;
-            case e_giftType.tripleBullet: TripleBulletEffect(); break;
-            case e_giftType.crossBullet: CrossBulletEffect(); break;
-            case e_giftType.slowBullet: SlowBulletEffect(); break;
-                
         }
-    }
-
-    private void SlowBulletEffect()
-    {
-        playerScript.bulletType = e_bulletType.slowBullet;
-        playerScript.bulletLeft = 30;
-        playerScript.fireRate = 0.07f;
-    }
-
-    private void CrossBulletEffect()
-    {
-        playerScript.bulletType = e_bulletType.crossBullet;
-        playerScript.bulletLeft = 30;
-        playerScript.fireRate = 0.07f;
-    }
-
-    private void TripleBulletEffect()
-    {
-        playerScript.bulletType = e_bulletType.tripleBullet;
-        playerScript.bulletLeft = 30;
-        playerScript.fireRate = 0.07f;
-
-    }
-
-    private void DoubleBulletEffect()
-    {
-        playerScript.bulletType = e_bulletType.doubleBullet;
-        playerScript.bulletLeft = 30;
-        playerScript.fireRate = 0.07f;
+        playerScript.bulletLeft = playerScript.MaxAmmunition;
     }
 
     private void NormalBulletEffect()
     {
-        playerScript.bulletType = e_bulletType.normalBullet;
-        playerScript.bulletLeft = 30;
-        playerScript.fireRate = 0.07f;
+        if (playerScript.bulletType == e_bulletType.infiniteBullet)
+        {
+            playerScript.BulletLevel++;
+            return;
+        }
+        playerScript.bulletType++;
     }
 
     private void HeartPlusEffect()

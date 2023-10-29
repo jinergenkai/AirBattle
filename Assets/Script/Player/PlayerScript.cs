@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Assets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,6 +19,7 @@ public class PlayerScript : MonoBehaviour
     public Text spaceToPlay;
     public Text gameover;
     public e_bulletType bulletType = e_bulletType.doubleBullet;
+    public int BulletLevel = 0;
 
     public int hp = 3;
     public int bulletLeft = 20;
@@ -23,8 +27,16 @@ public class PlayerScript : MonoBehaviour
     private float lastFireTime = 0;
     private float bulletSpeed = 20;
 
-    public float fireRate = 0.05f;
+    public float fireRate = 0.1f;
     private float TIME_REGAIN_ONE_BULLET = 0.2f;
+    public int MaxAmmunition = 30;
+
+    public bool isStopFire = false;
+
+    public bool isImmune = false;
+    public float immuneTime = 3f;
+    public float immuneStartTime = 0f;
+    public bool effectImmuneHide = false;
 
     void Start()
     {
@@ -35,29 +47,43 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        // bulletSpeed1 = 2;
-        // Get input from WASD keys
-
         if (Input.GetKey(KeyCode.Space))
         {
-            if (Time.time - lastFireTime > fireRate)
+            if (!isStopFire && Util.isOutDurationTime(lastFireTime, fireRate))
             {
-                Fire();
                 lastFireTime = Time.time;
+                useBullet();
+                Fire();
             }
         }
 
+        if (isImmune)
+        {
+            if (immuneStartTime <= 0)
+            {
+                immuneStartTime = Time.time;
+            }
+            else
+            {
+                if (Util.isOutDurationTime(immuneStartTime, immuneTime))
+                {
+                    isImmune = false;
+                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    immuneStartTime = -1;
+                }
+                else
+                {
+                    gameObject.GetComponent<SpriteRenderer>().enabled = effectImmuneHide;
+                    effectImmuneHide = !effectImmuneHide;
+                }
+            }
 
+        }
 
     }
 
     void Fire()
 	{
-        if (bulletLeft <= 0)
-        {
-            return;
-        }
-        bulletLeft--;
         //controller
         switch(bulletType)
         {
@@ -65,37 +91,26 @@ public class PlayerScript : MonoBehaviour
             case e_bulletType.doubleBullet: DoubleBullet(); break;
             case e_bulletType.tripleBullet: TripleBullet(); break;
             case e_bulletType.crossBullet: CrossBullet(); break;
-            case e_bulletType.slowBullet: SlowBullet(); break;
-            //case e_bulletType.excaliburBullet: ExcaliburBullet(); break;
+            case e_bulletType.infiniteBullet: InifiniteBullet(); break;
             default: break;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    void useBullet()
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (bulletLeft <= 0)
         {
-            //ResetScene();
+            isStopFire = true;
+            return;
         }
+        bulletLeft--;
     }
-
-    void ResetScene()
-    {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
-    }
-
 
     //  ┓   ┓┓            
     //  ┣┓┓┏┃┃┏┓╋  ╋┓┏┏┓┏┓
     //  ┗┛┗┻┗┗┗ ┗  ┗┗┫┣┛┗ 
     //               ┛┛   
-    private void SlowBullet()
-    {
-        bulletPrefab = Resources.Load<GameObject>("Prefab/Bullet");
-        GameObject bullet = Instantiate(bulletPrefab, spawnPoint.position, Quaternion.identity);
-        bullet.GetComponent<BulletScript>().Initialize(5, 0);
-    }
 
     private void CrossBullet()
     {
@@ -108,6 +123,38 @@ public class PlayerScript : MonoBehaviour
         bullet1.GetComponent<BulletScript>().Initialize(bulletSpeed, -135);
         bullet2.GetComponent<BulletScript>().Initialize(bulletSpeed, 45);
         bullet3.GetComponent<BulletScript>().Initialize(bulletSpeed, 135);
+    }
+    private void InifiniteBullet()
+    {
+        int NumberOfBullet = BulletLevel + (int)e_bulletType.infiniteBullet + 1;
+        bulletPrefab = Resources.Load<GameObject>("Prefab/Bullet");
+        GameObject[] bullets = new GameObject[NumberOfBullet];
+
+        int startBullet = 0;
+        if (NumberOfBullet % 2 == 0)
+        {
+            bullets[0] = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.6f, 0, 0), Quaternion.identity);
+            bullets[1] = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(-0.6f, 0, 0), Quaternion.identity);
+            bullets[0].GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
+            bullets[1].GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
+            startBullet = 2;
+        }
+        else
+        {
+            bullets[0] = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.6f, 0, 0), Quaternion.identity);
+            bullets[1] = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(-0.6f, 0, 0), Quaternion.identity);
+            bullets[2] = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0, 0, 0), Quaternion.identity);
+            bullets[0].GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
+            bullets[1].GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
+            bullets[2].GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
+
+        }
+        //NumberOfBullet -= 3;
+        //for (int i = 0; i < NumberOfBullet; i++)
+        //{
+        //    bullets[i] = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.6f, 0, 0), Quaternion.identity);
+        //    bullets[i].GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
+        //}
     }
 
     private void TripleBullet()
@@ -138,8 +185,16 @@ public class PlayerScript : MonoBehaviour
     }
     private void RegainBullet()
     {
-        if (bulletLeft < 30)
+        if (isStopFire)
+        {
+            if (bulletLeft >= 10)
+                isStopFire = false;
+            bulletLeft += 2;
+        }
+        else if (bulletLeft < 30)
+        {
             bulletLeft++;
+        }
     }
 
 

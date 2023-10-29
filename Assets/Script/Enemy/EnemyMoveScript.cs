@@ -10,8 +10,8 @@ public class EnemyMoveScript : MonoBehaviour
     private Transform target;
 
     //private Vector3[] Directs = { new Vector3(0, 0) ,new Vector3(0,1), new Vector3(1,0),new Vector3(-1, 0), new Vector3(0, -1)};
-    private Vector3[] Directs = {new Vector3(0, 0), new Vector3(0, 0), new Vector3(1,0),new Vector3(-1, 0), new Vector3(0, -1), new Vector3(0, 1)};
-    private int[] portion = {12, 3, 6, 6, 4, 7};
+    private Vector3[] Directs = {new Vector3(0, 0), new Vector3(1,0),new Vector3(-1, 0), new Vector3(0, -1), new Vector3(0, 1)};
+    private int[] portion = {10, 6, 6, 4, 5};
     private Vector3 CurrentDirect = new Vector3(0, 0);
 
     private Vector3[] corners;
@@ -20,7 +20,7 @@ public class EnemyMoveScript : MonoBehaviour
     {
         corners = Util.getCornersPlus(Camera.main);
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        InvokeRepeating("ChangeDirection", 1, 1);
+        InvokeRepeating("ChangeDirection", 0, 1);
     }
 
     // Update is called once per frame

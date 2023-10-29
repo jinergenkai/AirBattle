@@ -27,7 +27,17 @@ public class PlayerTriggerScript : MonoBehaviour
         if (other.CompareTag("EnemyBullet"))
         {
             if (gameObject.GetComponent<PlayerScript>().isImmune) return;
-            Destroy(other.gameObject);
+            PlayerGetDamage(); 
+        }
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("EnemyLazer"))
+        {
+            var start = other.GetComponent<LazerScript>().StartTime;
+            var duration = other.GetComponent<LazerScript>().DurationTime;
+            if (Time.time < start + 0.2f || Time.time > start + 0.4f) return;
+            if (gameObject.GetComponent<PlayerScript>().isImmune) return;
             PlayerGetDamage(); 
         }
     }

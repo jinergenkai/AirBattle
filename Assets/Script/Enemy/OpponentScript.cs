@@ -15,7 +15,7 @@ public class OpponentScript : MonoBehaviour
 {
     public Animator animator;
 
-    public Text score;
+    public Text score; 
 
     private int hp = 5;
     private bool isDead = false;

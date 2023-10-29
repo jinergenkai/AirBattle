@@ -36,7 +36,7 @@ public class PlayerScript : MonoBehaviour
     public bool isStopFire = false;
 
     public bool isImmune = false;
-    public float immuneTime = 3f;
+    public float immuneTime = 1.5f;
     public float immuneStartTime = 0f;
     public bool effectImmuneHide = false;
 

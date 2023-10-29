@@ -14,5 +14,9 @@ public class ScreenScript : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+        if (other.CompareTag("EnemyBullet"))
+        {
+            Destroy(other.gameObject);
+        }
     }
 }

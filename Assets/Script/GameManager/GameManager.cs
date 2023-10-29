@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         CurrentEnemyObject = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        if (CurrentEnemyObject == 0 && EnemyGenerateCount == MaxEnemyInStage)
+        if (CurrentEnemyObject == 0 && EnemyGenerateCount == ((currentGameLevel % 5 == 0 && currentGameLevel != 0) ? 1 : MaxEnemyInStage))
         {
             currentGameLevel++;
             StartNewStage();
@@ -86,8 +86,15 @@ public class GameManager : MonoBehaviour
         StageText.enabled = false;
 
 
-        InvokeRepeating("SpawnGiftEvent", BeginTimeGift, DelayTimeGift);
-        InvokeRepeating("SpawnEnemyEvent", OpponentBegin, OpponentDelay/currentGameLevel);
+        if (currentGameLevel % 5 == 0 && currentGameLevel != 0)
+        {
+            Instantiate(Resources.Load("prefab/CuteBoss"), new Vector3(-2.18f, 12.8f + 5, 0), Quaternion.identity);
+            EnemyGenerateCount++;
+        } else
+        {
+            InvokeRepeating("SpawnGiftEvent", BeginTimeGift, DelayTimeGift);
+            InvokeRepeating("SpawnEnemyEvent", OpponentBegin, OpponentDelay/currentGameLevel);
+        }
 
     }
 

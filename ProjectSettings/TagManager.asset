@@ -11,6 +11,7 @@ TagManager:
   - ScreenZone
   - Gift
   - EnemyBullet
+  - EnemyLazer
   layers:
   - Default
   - TransparentFX

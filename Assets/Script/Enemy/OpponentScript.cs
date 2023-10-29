@@ -32,7 +32,7 @@ public class OpponentScript : MonoBehaviour
     {
         score = GameObject.Find("Score").GetComponent<Text>();
 
-        InvokeRepeating("EnemyFire", 1, 2);
+        InvokeRepeating("EnemyFire", 1, 5);
     }
 
     void Update()
@@ -57,10 +57,10 @@ public class OpponentScript : MonoBehaviour
             switch (other.name)
             {
                 case "ExcaliburBullet(Clone)":
-                    hp -= 2;
+                    hp -= 20;
                     break;
                 case "Dragon(Clone)":
-                    hp -= 10;
+                    hp -= 40;
                     break;
                 case "Bullet(Clone)":
                     Destroy(other.gameObject);

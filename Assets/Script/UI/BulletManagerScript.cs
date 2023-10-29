@@ -21,6 +21,6 @@ public class BulletManagerScript : MonoBehaviour
     void Update()
     {
         ammunitionText.GetComponent<UnityEngine.UI.Text>().text = playerScript.bulletLeft.ToString();
-        bulletLeft.transform.localScale = new Vector3(playerScript.bulletLeft / 30f, bulletLeft.transform.localScale.y, bulletLeft.transform.localScale.z);
+        bulletLeft.transform.localScale = new Vector3(playerScript.bulletLeft / (float)playerScript.MaxAmmunition, bulletLeft.transform.localScale.y, bulletLeft.transform.localScale.z);
     }
 }

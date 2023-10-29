@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyBullet01Script : MonoBehaviour
 {
-    private float speed = 1f;
+    private float speed = 3f;
     private float angle = 180f;
     private float damage = 1f;
     private float cost = 1;

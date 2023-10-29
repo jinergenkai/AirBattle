@@ -21,6 +21,8 @@ public class PlayerScript : MonoBehaviour
     public e_bulletType bulletType = e_bulletType.doubleBullet;
     public int BulletLevel = 0;
 
+    public int score;
+
     public int hp = 3;
     public int bulletLeft = 20;
 
@@ -47,6 +49,9 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        score = int.Parse(GameObject.Find("Score").GetComponent<Text>().text);
+        MaxAmmunition = 30 + score % 10 * 4;
+
         if (Input.GetKey(KeyCode.Space))
         {
             if (!isStopFire && Util.isOutDurationTime(lastFireTime, fireRate))
@@ -147,14 +152,22 @@ public class PlayerScript : MonoBehaviour
             bullets[0].GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
             bullets[1].GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
             bullets[2].GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
+            startBullet = 3;
 
         }
-        //NumberOfBullet -= 3;
-        //for (int i = 0; i < NumberOfBullet; i++)
-        //{
-        //    bullets[i] = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.6f, 0, 0), Quaternion.identity);
-        //    bullets[i].GetComponent<BulletScript>().Initialize(bulletSpeed, 0);
-        //}
+        int angle = 0;
+        for (int i = startBullet, j = NumberOfBullet - 1; i < j; i++, j--)
+        {
+            angle += 17;
+            angle %= 90;
+
+            bullets[i] = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.0f, 0, 0), Quaternion.identity);
+            bullets[i].GetComponent<BulletScript>().Initialize(bulletSpeed, angle);
+
+            bullets[j] = Instantiate(bulletPrefab, spawnPoint.position + new Vector3(0.0f, 0, 0), Quaternion.identity);
+            bullets[j].GetComponent<BulletScript>().Initialize(bulletSpeed, -angle);
+
+        }
     }
 
     private void TripleBullet()
@@ -189,9 +202,9 @@ public class PlayerScript : MonoBehaviour
         {
             if (bulletLeft >= 10)
                 isStopFire = false;
-            bulletLeft += 2;
+            bulletLeft = Mathf.Min(bulletLeft + 2, MaxAmmunition);
         }
-        else if (bulletLeft < 30)
+        else if (bulletLeft < MaxAmmunition)
         {
             bulletLeft++;
         }

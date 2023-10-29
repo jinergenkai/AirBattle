@@ -17,20 +17,25 @@ public class PlayerTriggerScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        var playerScript = gameObject.GetComponent<PlayerScript>();
         if (other.CompareTag("Enemy"))
         {
             if (gameObject.GetComponent<PlayerScript>().isImmune) return;
             other.GetComponent<OpponentScript>().Hp -= 5;
-            gameObject.GetComponent<PlayerScript>().isImmune = true;
-            gameObject.GetComponent<PlayerScript>().hp--;
+            PlayerGetDamage(); 
         }
         if (other.CompareTag("EnemyBullet"))
         {
             if (gameObject.GetComponent<PlayerScript>().isImmune) return;
             Destroy(other.gameObject);
-            gameObject.GetComponent<PlayerScript>().isImmune = true;
-            gameObject.GetComponent<PlayerScript>().hp--;
+            PlayerGetDamage(); 
         }
+    }
+    private void PlayerGetDamage()
+    {
+        var playerScript = gameObject.GetComponent<PlayerScript>();
+        playerScript.isImmune = true;
+        playerScript.hp--;
+        playerScript.BulletLevel = Mathf.Max(Mathf.FloorToInt(playerScript.BulletLevel / 2), 0);
     }
 }

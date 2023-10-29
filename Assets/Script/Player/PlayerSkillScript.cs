@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class PlayerSkillScript : MonoBehaviour
 {
-
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -16,30 +15,30 @@ public class PlayerSkillScript : MonoBehaviour
     {
         PlayerScript player = gameObject.GetComponent<PlayerScript>();
         //when press 1
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(KeyCode.J) && player.score >= 50)
         {
-            if (player.bulletLeft > 10)
+            if (player.bulletLeft >= 10)
             {
                 player.bulletLeft -= 10;
                 ExcaliburBullet();
             }
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && player.score >= 150)
         {
-            if (player.bulletLeft > 20)
+            if (player.bulletLeft >= 30)
             {
-                player.bulletLeft -= 20;
+                player.bulletLeft -= 30;
                 CallDragon();
             }
         }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (player.bulletLeft > 20)
-            {
-                player.bulletLeft -= 20;
-                ShieldExploision();
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    if (player.bulletLeft > 20)
+        //    {
+        //        player.bulletLeft -= 20;
+        //        ShieldExploision();
+        //    }
+        //}
     }
 
     private void ShieldExploision()

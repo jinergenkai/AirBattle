@@ -16,11 +16,8 @@ public class GameManager : MonoBehaviour
     public GameObject player;
 
     private float stageDurationTime = 2.0f;
-
     public GameObject score;
     private int currentGameLevel = 0;
-
-    public int playerLevel = 1;
 
 
     public float OpponentBegin = 0;
@@ -76,7 +73,7 @@ public class GameManager : MonoBehaviour
     private void InitStage()
     {
         EnemyGenerateCount = 0;
-        MaxEnemyInStage += 10;
+        MaxEnemyInStage += 5;
     }
 
     private IEnumerator ShowAndHideText(string textToDisplay)
@@ -87,8 +84,10 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(stageDurationTime);
 
         StageText.enabled = false;
+
+
         InvokeRepeating("SpawnGiftEvent", BeginTimeGift, DelayTimeGift);
-        InvokeRepeating("SpawnEnemyEvent", OpponentBegin, OpponentDelay);
+        InvokeRepeating("SpawnEnemyEvent", OpponentBegin, OpponentDelay/currentGameLevel);
 
     }
 
@@ -101,8 +100,9 @@ public class GameManager : MonoBehaviour
         var randomPosition = new Vector3(Random.Range(rangeLeft, rangeRight), cameraPosition[2].y);
         GameObject giftSpawn = Instantiate(Gift, randomPosition, Quaternion.Euler(0f, 0f, 0f));
 
+        var randomPortion = new int[] { 10, 8 };
         //random gift type
-        var giftType = Random.Range(0, (int)e_giftType.maxGiftType);
+        var giftType = Util.RandomByPortionArray(randomPortion);
 
         //set sprite for gift
         giftSpawn.GetComponent<GiftScript>().Initialize(spriteGifts[giftType], (e_giftType)giftType);
@@ -123,7 +123,8 @@ public class GameManager : MonoBehaviour
         var rangeRight = cameraPosition[3].x;
         var randomPosition = new Vector3(Random.Range(rangeLeft, rangeRight), cameraPosition[2].y);
 
-        Instantiate(Opponent, randomPosition, Quaternion.Euler(0f, 0f, 180f));
+        GameObject enemy = Instantiate(Opponent, randomPosition, Quaternion.Euler(0f, 0f, 180f));
+        enemy.GetComponent<OpponentScript>().Hp = 3 + currentGameLevel;
     }
 
     void ResetScene()

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -31,8 +30,8 @@ public class BossScript : MonoBehaviour
     void Start()
     {
         GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Hp = gameManager.currentGameLevel * 1000 / 10;
-        MaxHp = gameManager.currentGameLevel * 1000 / 10;
+        Hp = gameManager.currentGameLevel * 500 / 10;
+        MaxHp = gameManager.currentGameLevel * 500 / 10;
         score = GameObject.Find("Score").GetComponent<Text>();
         GameObject.Find("BossHP").GetComponent<BossHPScript>().isShow = true;
         InvokeRepeating("EnemyFire", 1, 0.5f);

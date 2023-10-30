@@ -1,9 +1,11 @@
 using Assets;
+using Assets.Script.GameManager;
 using System;
 using System.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using static Assets.Util;
 using Random = UnityEngine.Random;
@@ -14,9 +16,10 @@ public class GameManager : MonoBehaviour
     public Text spaceToPlay;
     public Text StageText;
     public GameObject player;
+    public Text HighScore;
 
     private float stageDurationTime = 2.0f;
-    public GameObject score;
+    public Text score;
     public int currentGameLevel = 0;
 
 
@@ -43,6 +46,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        score = GameObject.Find("Score").GetComponent<Text>();
+        HighScore = GameObject.Find("HighScore").GetComponent<Text>();
+        HighScore.text = "HighScore: " + AppState.HighScore;
         //Start Game Event
         Time.timeScale = 0;
         gameover.enabled = false;
@@ -150,6 +156,8 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.R))
         {
+            if (AppState.HighScore < int.Parse(score.text))
+            AppState.HighScore = int.Parse(score.text);
             ResetScene();
         }
         if (player.GetComponent<PlayerScript>().hp == 0)

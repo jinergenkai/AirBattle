@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     private float stageDurationTime = 2.0f;
     public GameObject score;
-    private int currentGameLevel = 0;
+    public int currentGameLevel = 0;
 
 
     public float OpponentBegin = 0;
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
 
     public float BeginTimeGift = 0;
-    public float DelayTimeGift = 0.5f;
+    public float DelayTimeGift = 8f;
     public GameObject Gift;
     private Sprite[] spriteGifts = new Sprite[(int)e_giftType.maxGiftType];
 
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
         var randomPosition = new Vector3(Random.Range(rangeLeft, rangeRight), cameraPosition[2].y);
 
         GameObject enemy = Instantiate(Opponent, randomPosition, Quaternion.Euler(0f, 0f, 180f));
-        enemy.GetComponent<OpponentScript>().Hp = 3 + currentGameLevel;
+        enemy.GetComponent<OpponentScript>().Hp = 2 + currentGameLevel;
     }
 
     void ResetScene()

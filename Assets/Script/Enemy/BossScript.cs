@@ -18,8 +18,8 @@ public class BossScript : MonoBehaviour
     public Text score;
 
     public GameObject hpShow;
-    public int hp = 150;
-    public int MaxHp = 150;
+    public int hp = 1000;
+    public int MaxHp = 1000;
     private bool isDead = false;
 
     public int Hp
@@ -30,6 +30,9 @@ public class BossScript : MonoBehaviour
 
     void Start()
     {
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        Hp = gameManager.currentGameLevel * 1000 / 10;
+        MaxHp = gameManager.currentGameLevel * 1000 / 10;
         score = GameObject.Find("Score").GetComponent<Text>();
         GameObject.Find("BossHP").GetComponent<BossHPScript>().isShow = true;
         InvokeRepeating("EnemyFire", 1, 0.5f);
@@ -81,7 +84,10 @@ public class BossScript : MonoBehaviour
 
             animator.SetBool("IsDead", true);
             isDead = true;
-            GameObject.Find("BossHP").transform.localScale = new Vector3(0, 50, 0);
+            GameObject.Find("BossHP").transform.position = new Vector3(0, 50, 0);
+            GameObject.Find("BossHP").GetComponent<BossHPScript>().isShow = false;
+            GameObject.Find("BossHP").GetComponent<BossHPScript>().isFirstShow = true;
+
             Destroy(gameObject, 2f);
 
             score.text = "" + (int.Parse(score.text) + 1);

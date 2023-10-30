@@ -17,7 +17,7 @@ public class OpponentScript : MonoBehaviour
 
     public Text score; 
 
-    private int hp = 5;
+    private int hp = 3;
     private bool isDead = false;
 
     public int Hp

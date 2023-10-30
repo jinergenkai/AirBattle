@@ -29899,6 +29899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShow: 0
+  isFirstShow: 1
 --- !u!1 &1649365643
 GameObject:
   m_ObjectHideFlags: 0
@@ -30001,11 +30002,12 @@ MonoBehaviour:
   StageText: {fileID: 34060554}
   player: {fileID: 511787852}
   score: {fileID: 707706754}
+  currentGameLevel: 0
   OpponentBegin: 0
   OpponentDelay: 2
   Opponent: {fileID: 4170792215101475744, guid: a92e52f9c7355f14983dc1803fb88ce1, type: 3}
   BeginTimeGift: 0
-  DelayTimeGift: 8
+  DelayTimeGift: 6
   Gift: {fileID: 345572650179356590, guid: a97ed8b275bce904b81686a6c61db3e4, type: 3}
 --- !u!4 &1796621258
 Transform:

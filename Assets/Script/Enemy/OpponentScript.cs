@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,7 +16,7 @@ public class OpponentScript : MonoBehaviour
 
     public Text score; 
 
-    private int hp = 5;
+    private int hp = 3;
     private bool isDead = false;
 
     public int Hp

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyMoveScript : MonoBehaviour
 {
-    public float EnemySpeed = 7;
+    public float EnemySpeed = 4;
 
     private Transform target;
 
@@ -20,7 +20,7 @@ public class EnemyMoveScript : MonoBehaviour
     {
         corners = Util.getCornersPlus(Camera.main);
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        InvokeRepeating("ChangeDirection", 0, 1);
+        InvokeRepeating("ChangeDirection", 0, 1.5f);
     }
 
     // Update is called once per frame

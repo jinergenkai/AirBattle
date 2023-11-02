@@ -103,8 +103,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 3393903657451399914}
   score: {fileID: 0}
-  gameover: {fileID: 0}
-  flagover: 0
 --- !u!60 &6758120873913228086
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -224,3 +222,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec8a0cb0aa884545acefec957996ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemySpeed: 5

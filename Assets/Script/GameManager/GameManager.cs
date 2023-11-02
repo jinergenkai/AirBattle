@@ -1,9 +1,11 @@
 using Assets;
+using Assets.Script.GameManager;
 using System;
 using System.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using static Assets.Util;
 using Random = UnityEngine.Random;
@@ -14,10 +16,11 @@ public class GameManager : MonoBehaviour
     public Text spaceToPlay;
     public Text StageText;
     public GameObject player;
+    public Text HighScore;
 
     private float stageDurationTime = 2.0f;
-    public GameObject score;
-    private int currentGameLevel = 0;
+    public Text score;
+    public int currentGameLevel = 0;
 
 
     public float OpponentBegin = 0;
@@ -27,7 +30,7 @@ public class GameManager : MonoBehaviour
 
 
     public float BeginTimeGift = 0;
-    public float DelayTimeGift = 0.5f;
+    public float DelayTimeGift = 8f;
     public GameObject Gift;
     private Sprite[] spriteGifts = new Sprite[(int)e_giftType.maxGiftType];
 
@@ -43,6 +46,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        score = GameObject.Find("Score").GetComponent<Text>();
+        HighScore = GameObject.Find("HighScore").GetComponent<Text>();
+        HighScore.text = "HighScore: " + AppState.HighScore;
         //Start Game Event
         Time.timeScale = 0;
         gameover.enabled = false;
@@ -131,7 +137,7 @@ public class GameManager : MonoBehaviour
         var randomPosition = new Vector3(Random.Range(rangeLeft, rangeRight), cameraPosition[2].y);
 
         GameObject enemy = Instantiate(Opponent, randomPosition, Quaternion.Euler(0f, 0f, 180f));
-        enemy.GetComponent<OpponentScript>().Hp = 3 + currentGameLevel;
+        enemy.GetComponent<OpponentScript>().Hp = 2 + currentGameLevel;
     }
 
     void ResetScene()
@@ -150,6 +156,8 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.R))
         {
+            if (AppState.HighScore < int.Parse(score.text))
+            AppState.HighScore = int.Parse(score.text);
             ResetScene();
         }
         if (player.GetComponent<PlayerScript>().hp == 0)

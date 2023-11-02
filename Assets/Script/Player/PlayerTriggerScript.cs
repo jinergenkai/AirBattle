@@ -46,6 +46,6 @@ public class PlayerTriggerScript : MonoBehaviour
         var playerScript = gameObject.GetComponent<PlayerScript>();
         playerScript.isImmune = true;
         playerScript.hp--;
-        playerScript.BulletLevel = Mathf.Max(Mathf.FloorToInt(playerScript.BulletLevel / 2), 0);
+        playerScript.BulletLevel = Mathf.Max(Mathf.FloorToInt(playerScript.BulletLevel / 5), 0);
     }
 }

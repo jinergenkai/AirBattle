@@ -8,7 +8,7 @@ public class BossHPScript : MonoBehaviour
     GameObject bossHpLeft;
     BossScript BossScript;
     public bool isShow = false;
-    bool isFirstShow = true;
+    public bool isFirstShow = true;
     // Start is called before the first frame update
     void Start()
     {
